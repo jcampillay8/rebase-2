@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %} {% endblock %}
+    </title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/grid_03.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="contenedor">
+        <header class="header">
+            <div class="col_izq">
+                <h1>Rebase</h1>
+                <h3>Read English Book and Study English</h3>
+            </div>
+            <div class="col_der">
+                <p><a href="{% url 'users' %}" class="btn">Mi Cuenta</a> | <a href="/logout" class='btn-out'>Salir</a></p>
+            </div>           
+        </header>
+        <nav class="navbar">
+            <ul>
+                <li><a href="/rebase/home"><strong>Inicio</strong></a></li>
+                <li><a href="/rebase/add_text"><strong>Insertar Texto &rsaquo;&rsaquo;</strong></a></li>
+                <li><a href="/rebase/read"><strong>Leer Texto&rsaquo;&rsaquo;</strong></a></li>
+                <li><a href="/rebase/word"><strong>Estudiar Palabras &rsaquo;&rsaquo;</strong></a></li>
+                <li><a href="/rebase/phrase"><strong>Estudiar Frases &rsaquo;&rsaquo;</strong></a></li>
+                <li><a href="/rebase/contact"><strong>Contacto</strong></a></li>
+            </ul>
+        </nav>
+        <main class="contenido">
+            {% block content %}     
+            {% endblock %}
+        </main>
+        <footer class="footer">
+            <p>Coding Dojo</p>
+        </footer>
+    </div>  
+    
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Layout de Sitio Web con CSS GRID</title>
+		{% load static %}
+        <link rel="stylesheet" href="{% static 'css/grid_01.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto" rel="stylesheet">
+
+	</head>
+	<body>
+		<div class="contenedor">
+			<header class="header">
+				<h1>REBASE</h1>
+                <h3>Read English Book and Study English</h3>
+			</header>
+
+			<section class="section">
+				{% if messages %}
+                <div class="error-box">
+                    <h3>Lo sentimos:</h3><br>
+                    <ul>
+                    {% for message in messages %}
+                        <li class="messages-error">{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+                {% else %}
+                <img src="{% static 'img/books_01.jpg' %}" alt="image">
+                {% endif %}
+                
+			</section>
+
+			<main class="contenido">
+				<div class="form-container">
+                    <div class="form-btn">
+                        <span onclick="login()">Iniciar Sesión</span>
+                        <span onclick="register()">Registrarse</span>
+                        <hr id="Indicator">
+                    </div>                    
+                    <form id="LoginForm" action='login' method='post'> 
+                        {% csrf_token %}
+                        <div class="form-item">
+                            <div class="col1">
+                                <label class="label-item">Correo Electrónico:</label>
+                                <input class="input-item" type='email' name='loginEmail'>
+                            </div>
+                            <div class="col2">
+                                <label class="label-item">Contraseña</label>
+                                <input class="input-item" type='password' name='password'>
+                            </div>                       
+                            
+                        </div>
+                        <button type="submit" name='login' class="btn">Iniciar</button>
+                        <a href="">Recuperar Contraseña</a>
+                    </form>
+                    <form id="RegForm" action='register', method='post'>
+                        {% csrf_token %}
+                        <div class="form-item">
+                            <div class="col1">
+                                <label class="label-item">Nombre:</label>
+                                <input class="input-item" type='text' name='first_name'>
+                            </div>
+                            <div class="col2">
+                                <label class="label-item">Apellido :</label>
+                                <input class="input-item" type='text' name='last_name'>
+                            </div>
+                        </div>
+
+                        <div class="form-item">
+                            <div class="col1">
+                                <label class="label-item">Nombre Usuario:</label>
+                                <input class="input-item" type='text' name='username' >
+                            </div>
+                            <div class="col2">
+                                <label class="label-item">Fecha Nacimiento:</label>
+                                <input class="input-item" type='date' name='birthdate' style="text-align: center;">
+                            </div>
+                        </div>
+                        <div class="form-item">
+                            <div class="col1">
+                                <label class="label-item">Correo Electrónido:</label>
+                                <input class="input-item" type='email' name='email'>
+                            </div>
+                            <div class="col2">
+                                <label class="label-item">Confirmación Correo Electrónido:</label>
+                                <input class="input-item" type='email' name='confirm_email'>
+                            </div>
+                            
+                        </div>
+                        <div class="form-item">
+                            <div class="col1">
+                                <label class="label-item">Contraseña:</label>
+                                <input class="input-item" type='password' name='password'>
+                            </div>
+                            <div class="col2">
+                                <label class="label-item">Confirmación Contraseña:</label>
+                                <input class="input-item" type='password' name='confirm_password'>
+                            </div>
+                            
+                        </div>
+                            <button type="submit" name="formAction" value='Login' class="btn">Registrarse</button>
+                    </form>
+			</main>
+			<footer class="footer">
+				Coding Dojo - Latam
+			</footer>
+            <script src="{% static 'js/script.js' %}"></script>
+		</div>
+	</body>
+</html>

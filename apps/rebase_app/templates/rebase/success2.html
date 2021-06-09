@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Rebase|Home {% endblock %}
+
+{% block content %} 
+
+    <div class="col_izq">
+        <h1> Texto {{text.text_name}} añadido correctamente</h1><br>
+        <p>Exito {{ user.first_name }}! </p><br>
+    </div>
+    <div class="col_der">
+        <img src="{% static 'img/book_success.jpg' %}" alt="image">
+    </div>
+
+{% endblock %}

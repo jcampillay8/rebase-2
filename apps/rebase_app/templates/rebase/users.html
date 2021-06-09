@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Rebase|Home {% endblock %}
+
+{% block content %} 
+
+<div class="row1">
+    <table>
+        <tr>
+            <th>Usuario ID</th>
+            <th>Nombre Completo</th>
+            <th>Correo Electrónico</th>
+            <th>Fecha Nacimiento</th>
+            <th>Creado en</th>
+        </tr>
+        {% load i18n %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.first_name}} {{ user.last_name}}</td>
+            <td>{{ user.email}}</td>
+            <td>{{ user.birthdate}}</td>
+            {% language 'es' %}
+            <td>{{ user.created_at}}</td>
+            {% endlanguage %}
+        </tr>
+    </table>
+</div>
+<br><br>
+<div class="row2"><h2>Textos de {{request.session.first_name}}</h2>
+    <table>
+        <tr>
+            <th>Texto ID</th>
+            <th>Nombre Texto</th>
+            <th>Creado en</th>
+            <th>Acción</th>
+        </tr>
+        {% for text in textos %}
+        {% if text.user.id == request.session.id %}
+        {% load i18n %}
+        <tr>
+            <td>{{ text.id }}</td>
+            <td>{{ text.text_name}}</td>
+            {% language 'es' %}
+            <td>{{ text.createdAt}}</td>
+            {% endlanguage %}
+            <td>
+                <a href="delete/{{text.id}}"  class="button-1">Eliminar</a>
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+</div>
+<br>
+<div class="row3">
+    {% if textos.has_other_pages %}
+    <ul class="pagination">
+        {% if textos.has_previous %}
+            <li><a href="?page={{ textos.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+        <li class='disabled'><span>&laquo;</span></li>
+        {% endif %}
+        {% for i in textos.paginator.page_range %}
+            {% if textos.number == i%}
+                <li class='active'><span>{{ i }}<span class="se-only">&#10004;</span></span></li>
+                {% else %}
+                <li><a href="?page={{ i }}">{{ i }}</a></li>
+            {% endif %}
+        {% endfor %}
+
+        {% if textos.has_next %}
+            <li><a href="?page={{ textos.next_page_number }}">&raquo;</a></li>
+        {% else %}
+        <li class='disabled'><span>&raquo;</span></li>
+        {% endif %}
+    </ul>
+    {% endif %}
+</div>
+{% endblock %}

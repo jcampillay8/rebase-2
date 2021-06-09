@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Rebase|Home {% endblock %}
+
+{% block content %} 
+
+    <div class = "userMessage">  <!--this code is for the user text input-->
+        <form class ="messageInput" action="/rebase/add_text2" method="POST">
+            {% csrf_token %}
+            <h2>{{request.session.first_name}}, inserta un nuevo texto!</h2>
+            <br>
+            <label class="label-item">Ingresa nombre texto:</label>
+            <input class="input-item" type='text' name='text_name'>
+            <br>
+            <label class="label-item">Pegar en este cuadro texto a leer:</label>
+            <textarea class="textboxInput" name="add_text"></textarea></br></br>
+            <input type="submit" value="Añadir Texto" class="messageButton">
+        </form>
+    </div>
+
+{% endblock %}

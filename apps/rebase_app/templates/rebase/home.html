@@ -1,0 +1,12 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Rebase|Home {% endblock %}
+
+{% block content %} 
+<img src="{% static 'img/book_leaf.jpg' %}" alt="image">
+<div class="text_container">
+    <h4>Hola {{request.session.first_name}}!</h4>
+</div>
+{% endblock %}

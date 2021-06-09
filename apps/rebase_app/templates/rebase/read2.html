@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Rebase|Home {% endblock %}
+
+{% block content %} 
+
+<div class="row_text">
+    <div class="row1">
+        <h1>Titulo - {{text_name}}</h1>
+    </div>
+    <br>
+    <div class="row2">
+        <div class="row2_1">
+            <h4>English Text</h4>
+            <p>{{content}}</p>
+        </div>
+        <div class="row2_2">
+            <p><a href="" class="btn_direction">&#8249;</a></p>
+            <div class="contador">
+                <p >{{ contador }}</p>
+            </div>
+            <p><a href="/rebase/next" class="btn_direction">&#8250;</a></p>
+        </div>
+        <div class="row2_3"></div>
+        <div class="row2_4"></div>
+        
+    </div>
+</div>
+
+
+    
+
+
+
+{% endblock %}
