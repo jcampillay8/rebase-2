@@ -115,9 +115,34 @@ def read2(request, text_id):
     return render(request, 'rebase/read2.html', context)
 
 def next(request, text_id):
+    
     book = Text.objects.get(id=text_id).content
+    
     line=book.split(".")
-    contador=0
+    
+    cont = Text.objects.get(id=text_id)
+    cont.contador=int(request.POST['contador'])+1
+    cont.save()
+    contador=Text.objects.get(id=text_id).contador
+    context ={
+        'book': Text.objects.get(id=text_id),
+        'text_name': Text.objects.get(id=text_id).text_name,
+        'content':  line[contador],
+        'contador': contador,
+    }
+    # print(Text.objects.get(id=text_id).content)
+    return render(request, 'rebase/read2.html', context)
+
+def previous(request, text_id):
+    
+    book = Text.objects.get(id=text_id).content
+    
+    line=book.split(".")
+    
+    cont = Text.objects.get(id=text_id)
+    cont.contador=int(request.POST['contador'])-1
+    cont.save()
+    contador=Text.objects.get(id=text_id).contador
     context ={
         'book': Text.objects.get(id=text_id),
         'text_name': Text.objects.get(id=text_id).text_name,

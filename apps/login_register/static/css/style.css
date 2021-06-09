@@ -240,16 +240,18 @@ form a{
 .row2_2{
     margin-top: 10px;
     display: flex;
-
+    align-items: center;
+    justify-content: center;
 }
 
 .contador{
     border: 2px solid black;
-    padding-left: 10px;
-    padding-right: 10px;
+    /* padding-left: 10px;
+    padding-right: 10px; */
     margin-left: 10px;
     margin-right: 10px;
-    padding-top: 5px;
+    width: 50px;
+    text-align: center;
 }
 
 .btn_direction{
@@ -258,6 +260,16 @@ form a{
     color: #fff;
     padding: 8px 30px;
     /* margin: 30px 0; */
+    border-radius: 10px;
+    transition: background 0.5s;
+}
+
+.btn_translate{
+    display: inline-block;
+    background:  orange;
+    color: #fff;
+    padding: 8px 30px;
+    margin-left: 25px;
     border-radius: 10px;
     transition: background 0.5s;
 }

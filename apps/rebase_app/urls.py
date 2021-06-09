@@ -15,5 +15,6 @@ urlpatterns = [
     path('rebase/users', views.users, name="users"),
     path('rebase/delete/<int:textId>', views.delete, name='delete'),
     path('rebase/<int:text_id>', views.read2),
-    path('rebase/next>', views.next),
+    path('rebase/next/<int:text_id>', views.next),
+    path('rebase/previous/<int:text_id>', views.previous),
 ]
