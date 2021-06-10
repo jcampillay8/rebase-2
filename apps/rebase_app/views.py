@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from apps.login_register.models import User
 from apps.rebase_app.models import Text
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from google_trans_new import google_translator
 
 # Home
 def home(request):
@@ -114,6 +115,9 @@ def read2(request, text_id):
     # print(Text.objects.get(id=text_id).content)
     return render(request, 'rebase/read2.html', context)
 
+# def acction_read(request, text_id):
+    
+
 def next(request, text_id):
     
     book = Text.objects.get(id=text_id).content
@@ -129,6 +133,7 @@ def next(request, text_id):
         'text_name': Text.objects.get(id=text_id).text_name,
         'content':  line[contador],
         'contador': contador,
+        'contenido': '',
     }
     # print(Text.objects.get(id=text_id).content)
     return render(request, 'rebase/read2.html', context)
@@ -148,6 +153,30 @@ def previous(request, text_id):
         'text_name': Text.objects.get(id=text_id).text_name,
         'content':  line[contador],
         'contador': contador,
+        'contenido': '',
+    }
+    # print(Text.objects.get(id=text_id).content)
+    return render(request, 'rebase/read2.html', context)
+
+def translate(request, text_id):
+    
+    book = Text.objects.get(id=text_id).content
+    
+    line=book.split(".")
+    
+    cont = Text.objects.get(id=text_id)
+    cont.contador=int(request.POST['contador'])
+    cont.save()
+    contador=Text.objects.get(id=text_id).contador
+    linea_Esp = line[contador]
+    translator=google_translator()
+    translation=translator.translate(linea_Esp,lang_src="en", lang_tgt="es")
+    context ={
+        'book': Text.objects.get(id=text_id),
+        'text_name': Text.objects.get(id=text_id).text_name,
+        'content':  line[contador],
+        'contador': contador,
+        'contenido': translation,
     }
     # print(Text.objects.get(id=text_id).content)
     return render(request, 'rebase/read2.html', context)

@@ -17,4 +17,5 @@ urlpatterns = [
     path('rebase/<int:text_id>', views.read2),
     path('rebase/next/<int:text_id>', views.next),
     path('rebase/previous/<int:text_id>', views.previous),
+    path('rebase/translate/<int:text_id>', views.translate),
 ]
