@@ -18,7 +18,7 @@
                 <th>Acción</th>
             </tr>
         
-            {% for text in textos %}
+            {% for text in textos reversed %}
             {% if text.user.id == request.session.id %}
             {% load i18n %}
             <tr>

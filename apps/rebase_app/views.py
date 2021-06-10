@@ -119,7 +119,6 @@ def read2(request, text_id):
     
 
 def next(request, text_id):
-    
     book = Text.objects.get(id=text_id).content
     
     line=book.split(".")
@@ -128,15 +127,32 @@ def next(request, text_id):
     cont.contador=int(request.POST['contador'])+1
     cont.save()
     contador=Text.objects.get(id=text_id).contador
-    context ={
-        'book': Text.objects.get(id=text_id),
-        'text_name': Text.objects.get(id=text_id).text_name,
-        'content':  line[contador],
-        'contador': contador,
-        'contenido': '',
-    }
-    # print(Text.objects.get(id=text_id).content)
-    return render(request, 'rebase/read2.html', context)
+    print(len(line))
+    print("####")
+    print(contador)
+    print(len(line)-contador)
+    if (len(line)-contador) >=1:
+        print('dentro')
+        context ={
+            'book': Text.objects.get(id=text_id),
+            'text_name': Text.objects.get(id=text_id).text_name,
+            'content':  line[contador],
+            'contador': contador,
+            'contenido': '',
+        }
+        # print(Text.objects.get(id=text_id).content)
+        return render(request, 'rebase/read2.html', context)
+    else:
+        print("fuera")
+        context ={
+            'book': Text.objects.get(id=text_id),
+            'text_name': Text.objects.get(id=text_id).text_name,
+            'content':  "END OF TEXT, CONGRATULATION",
+            'contador': contador,
+            'contenido': '',
+        }
+        # print(Text.objects.get(id=text_id).content)
+        return render(request, 'rebase/read2.html', context)
 
 def previous(request, text_id):
     
@@ -148,15 +164,32 @@ def previous(request, text_id):
     cont.contador=int(request.POST['contador'])-1
     cont.save()
     contador=Text.objects.get(id=text_id).contador
-    context ={
-        'book': Text.objects.get(id=text_id),
-        'text_name': Text.objects.get(id=text_id).text_name,
-        'content':  line[contador],
-        'contador': contador,
-        'contenido': '',
-    }
-    # print(Text.objects.get(id=text_id).content)
-    return render(request, 'rebase/read2.html', context)
+    print(len(line))
+    print("####")
+    print(contador)
+    print(len(line)-contador)
+    if (len(line)-contador) >=1:
+        print('dentro')
+        context ={
+            'book': Text.objects.get(id=text_id),
+            'text_name': Text.objects.get(id=text_id).text_name,
+            'content':  line[contador],
+            'contador': contador,
+            'contenido': '',
+        }
+        # print(Text.objects.get(id=text_id).content)
+        return render(request, 'rebase/read2.html', context)
+    else:
+        print("fuera")
+        context ={
+            'book': Text.objects.get(id=text_id),
+            'text_name': Text.objects.get(id=text_id).text_name,
+            'content':  "END OF TEXT, CONGRATULATION",
+            'contador': contador,
+            'contenido': '',
+        }
+        # print(Text.objects.get(id=text_id).content)
+        return render(request, 'rebase/read2.html', context)
 
 def translate(request, text_id):
     
