@@ -34,8 +34,7 @@
                     {% csrf_token %}
                             <input type="hidden" value="{{contador}}" name='contador'>
                     <button type="submit" value='submit' class="btn_translate">Traducir</button>
-                </form>
-                
+                </form>                
             
         </div>
         
@@ -45,8 +44,22 @@
         </div>
         <br>
         <div class="row2_4">
-            <h4>Agregar frase para estudiar</h4>
-            <input type="text" name='new_sentence'>
+            {% if messages %}
+                <div class="error-box">
+                    <ul>
+                    {% for message in messages %}
+                        <li class="messages-error">{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            <form action="/rebase/add_new_sentence/{{book.id}}" method='POST'>
+                {% csrf_token %}
+                <h4>Agregar frase para estudiar</h4>
+                <input type="text" name='new_sentence' class='add_new_sentence'>
+                <input type="hidden" value="{{contador}}" name='contador'>
+                <button type="submit" value='submit' class="btn_translate">Agregar Frase</button>
+            </form>
         </div>
         
     </div>

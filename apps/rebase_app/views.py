@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from apps.login_register.models import User
-from apps.rebase_app.models import Text
+from apps.rebase_app.models import Text, Sentence
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from google_trans_new import google_translator
+from django.contrib import messages
+import random
 
 # Home
 def home(request):
@@ -111,12 +113,45 @@ def read2(request, text_id):
         'text_name': Text.objects.get(id=text_id).text_name,
         'content':  line[contador],
         'contador': contador,
+        'contenido':'',
     }
-    # print(Text.objects.get(id=text_id).content)
+
     return render(request, 'rebase/read2.html', context)
 
-# def acction_read(request, text_id):
+def add_new_sentence(request, text_id):
+    errors = Sentence.objects.add_sentence_validator(request.POST, request.session["id"])
+
+    if(len(errors)):
+        for tag, error in errors.items():
+            messages.error(request, error, extra_tags=tag)
+        return redirect('read2', text_id)
     
+    else:
+        thisUser = User.objects.get(id=request.session['id'])
+        
+        newSentence = Sentence.objects.create(
+            frase = request.POST.get('new_sentence'),
+            valor_frase = 10,
+            user_frase = thisUser,
+        )
+        newSentence.save()
+
+        book = Text.objects.get(id=text_id).content    
+        line=book.split(".")    
+        cont = Text.objects.get(id=text_id)
+        cont.contador=int(request.POST['contador'])
+        cont.save()
+        contador=Text.objects.get(id=text_id).contador
+
+        linea_Esp = line[contador]
+        context ={
+            'book': Text.objects.get(id=text_id),
+            'text_name': Text.objects.get(id=text_id).text_name,
+            'content':  line[contador],
+            'contador': contador,
+            'contenido': '',
+        }
+        return render(request, 'rebase/read2.html', context)    
 
 def next(request, text_id):
     book = Text.objects.get(id=text_id).content
@@ -127,12 +162,7 @@ def next(request, text_id):
     cont.contador=int(request.POST['contador'])+1
     cont.save()
     contador=Text.objects.get(id=text_id).contador
-    print(len(line))
-    print("####")
-    print(contador)
-    print(len(line)-contador)
     if (len(line)-contador) >=1:
-        print('dentro')
         context ={
             'book': Text.objects.get(id=text_id),
             'text_name': Text.objects.get(id=text_id).text_name,
@@ -143,7 +173,6 @@ def next(request, text_id):
         # print(Text.objects.get(id=text_id).content)
         return render(request, 'rebase/read2.html', context)
     else:
-        print("fuera")
         context ={
             'book': Text.objects.get(id=text_id),
             'text_name': Text.objects.get(id=text_id).text_name,
@@ -164,12 +193,7 @@ def previous(request, text_id):
     cont.contador=int(request.POST['contador'])-1
     cont.save()
     contador=Text.objects.get(id=text_id).contador
-    print(len(line))
-    print("####")
-    print(contador)
-    print(len(line)-contador)
     if (len(line)-contador) >=1:
-        print('dentro')
         context ={
             'book': Text.objects.get(id=text_id),
             'text_name': Text.objects.get(id=text_id).text_name,
@@ -180,7 +204,6 @@ def previous(request, text_id):
         # print(Text.objects.get(id=text_id).content)
         return render(request, 'rebase/read2.html', context)
     else:
-        print("fuera")
         context ={
             'book': Text.objects.get(id=text_id),
             'text_name': Text.objects.get(id=text_id).text_name,
@@ -217,10 +240,64 @@ def translate(request, text_id):
 
 
 def word(request):
+
     return render(request, 'rebase/word.html')
 
 def phrase(request):
-    return render(request, 'rebase/phrase.html')
+    user = User.objects.get(id=request.session["id"])
+    current_sentences =Sentence.objects.filter(user_frase=user)
+    
+    list_current_sentences =[]
+    for i in current_sentences:
+        list_current_sentences.append(i.frase)
+
+    list_current_nivel_senteces=[]
+    for j in current_sentences:
+        list_current_nivel_senteces.append(j.valor_frase)    
+    
+    aleatorio_1 = random.randint(0,len(list_current_sentences)-1)
+    linea_Esp=list_current_sentences[aleatorio_1]
+    translator=google_translator()
+    translation=translator.translate(linea_Esp,lang_src="en", lang_tgt="es")
+
+    nivel_sentce = list_current_nivel_senteces[aleatorio_1]
+    context={
+        
+        'contador': aleatorio_1,
+        'text_esp':translation,
+        'nivel': nivel_sentce,
+        'english_sentence': ' ',
+    }
+    return render(request, 'rebase/phrase.html', context)
+
+def phrase2(request):
+    user = User.objects.get(id=request.session["id"])
+    current_sentences =Sentence.objects.filter(user_frase=user)
+    
+    list_current_sentences =[]
+    for i in current_sentences:
+        list_current_sentences.append(i.frase)
+
+    list_current_nivel_senteces=[]
+    for j in current_sentences:
+        list_current_nivel_senteces.append(j.valor_frase)    
+    
+    aleatorio_1 = random.randint(0,len(list_current_sentences)-1)
+    linea_Esp=list_current_sentences[aleatorio_1]
+    translator=google_translator()
+    translation=translator.translate(linea_Esp,lang_src="en", lang_tgt="es")
+
+    nivel_sentce = list_current_nivel_senteces[aleatorio_1]
+    context={
+        
+        'contador': aleatorio_1,
+        'text_esp':translation,
+        'nivel': nivel_sentce,
+        'english_sentence': ' ',
+    }
+
+
+    return render(request, 'rebase/phrase2.html')
 
 def contact(request):
     return render(request, 'rebase/contact.html')

@@ -12,3 +12,11 @@ function login(){
     LoginForm.style.transform = "translateX(600px)";
     Indicator.style.transform = "translateX(0px)";
 }
+
+
+$(document).ready(function(){
+    $('#traducir').click(function(){
+        alert('hello')
+    })
+})
+
