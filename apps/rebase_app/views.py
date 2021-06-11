@@ -250,6 +250,7 @@ def phrase(request):
     list_current_sentences =[]
     for i in current_sentences:
         list_current_sentences.append(i.frase)
+        print(i.frase)
 
     list_current_nivel_senteces=[]
     for j in current_sentences:
@@ -282,22 +283,28 @@ def phrase2(request):
     for j in current_sentences:
         list_current_nivel_senteces.append(j.valor_frase)    
     
-    aleatorio_1 = random.randint(0,len(list_current_sentences)-1)
-    linea_Esp=list_current_sentences[aleatorio_1]
+    indice_sentencia = int(request.POST['contador'])
+    linea_Esp=list_current_sentences[indice_sentencia]
     translator=google_translator()
     translation=translator.translate(linea_Esp,lang_src="en", lang_tgt="es")
 
-    nivel_sentce = list_current_nivel_senteces[aleatorio_1]
+    nivel_sentce = list_current_nivel_senteces[indice_sentencia]
+    
+    print(request.POST['answer_sentence'])
+    if request.POST['answer_sentence'] == linea_Esp:
+        answer = 'correcto'
+    else:
+        answer = 'incorrecto'
     context={
         
-        'contador': aleatorio_1,
+        'contador': indice_sentencia,
         'text_esp':translation,
         'nivel': nivel_sentce,
-        'english_sentence': ' ',
+        'english_sentence': linea_Esp,
+        'answer':answer,
     }
 
-
-    return render(request, 'rebase/phrase2.html')
+    return render(request, 'rebase/phrase2.html', context)
 
 def contact(request):
     return render(request, 'rebase/contact.html')

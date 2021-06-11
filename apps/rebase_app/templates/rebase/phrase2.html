@@ -4,6 +4,42 @@
 {% block title %} Rebase|Home {% endblock %}
 
 {% block content %} 
-    <h1>I AM COOL</h1>
+<div class="row2">
+    <div class="row2_1">
+        <h4>Frase Esapñol: </h4>
+        <p>{{text_esp}}</p>
+    </div>
+    <div class="row2_2">
+        <form action="/rebase/phrase" method='POST'>
+            {% csrf_token %}
+            <button type="submit" value='submit' class="btn_translate">Dar Aleatorio</button>
+            
+            <input type="number" value="{{contador}}" name='contador' class="contador">
+        </form>
+        
+        <a href="delete/{{text.id}}" class="btn-out" style="margin-left: 200px;">Eliminar</a>
+    </div>
+    <div class="row2_3">
+        <form action="/rebase/phrase2" method='POST'>
+        {% csrf_token %}
+        <h4>Tu respuesta en Inglés:</h4>
+        <input type="text" name='answer_sentence' class='answer_sentence'>
+        <div class="btn_respuesta_nivel" >
+            {% if answer == 'correcto' %}
+            <p style="background-color: green;">Bueno</p>
+            {% else %}
+            <p style="background-color: red;">Malo</p>
+            {% endif %}
+            <input type="hidden" value="{{contador}}" name='contador'>
+            <button type="" value='submit' class="btn_answer">Ver Respuesta</button>
+            <p>Nivel: {{ nivel }}</p>
+        </div>
+        </form>        
+    </div>
+    <div class="row2_4">
+        <h4>Frase Inglés: </h4>
+        <p>{{ english_sentence }}</p>
+    </div>
+</div>
 
 {% endblock %}
