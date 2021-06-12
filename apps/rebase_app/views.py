@@ -149,6 +149,7 @@ def add_new_sentence(request, text_id):
         return render(request, 'rebase/read2.html', context)    
 
 def next(request, text_id):
+    print('hello there')
     book = Text.objects.get(id=text_id).content
     
     line=book.split(".")
@@ -177,6 +178,13 @@ def next(request, text_id):
         }
         # print(Text.objects.get(id=text_id).content)
         return render(request, 'rebase/read2.html', context)
+
+def next_line(request):
+    # user = User.objects.get(id=request.session["id"])
+    # current_sentences =Sentence.objects.filter(user_frase=user)
+    # text_id = 1
+
+    return redirect ('/next',text_id=1)
 
 def previous(request, text_id):
     
@@ -233,7 +241,7 @@ def translate(request, text_id):
     return render(request, 'rebase/read2.html', context)
 
 
-
+#--------------------- Frase -------------------------------
 
 
 def phrase(request):
@@ -247,17 +255,30 @@ def phrase(request):
 
     list_current_nivel_senteces=[]
     for j in current_sentences:
-        list_current_nivel_senteces.append(j.valor_frase)    
+        list_current_nivel_senteces.append(j.valor_frase)
+        print(j.valor_frase)    
     
     aleatorio_1 = random.randint(0,len(list_current_sentences)-1)
-    linea_Eng=list_current_sentences[aleatorio_1]
+    aleatorio_2 = random.randint(0,len(list_current_sentences)-1)
+    if list_current_nivel_senteces[aleatorio_1] >= list_current_nivel_senteces[aleatorio_2]:
+        aleatorio_win=aleatorio_1
+    else:
+        aleatorio_win=aleatorio_2
+    print(' ')
+    print(list_current_sentences[aleatorio_1])
+    print(list_current_nivel_senteces[aleatorio_1])
+    print("###########")
+    print(list_current_sentences[aleatorio_2])
+    print(list_current_nivel_senteces[aleatorio_2])
+
+    linea_Eng=list_current_sentences[aleatorio_win]
     translator=google_translator()
     translation=translator.translate(linea_Eng,lang_src="en", lang_tgt="es")
 
-    nivel_sentce = list_current_nivel_senteces[aleatorio_1]
+    nivel_sentce = list_current_nivel_senteces[aleatorio_win]
     context={
         
-        'contador': aleatorio_1,
+        'contador': aleatorio_win,
         'text_esp':translation,
         'nivel': nivel_sentce,
         'english_sentence': ' ',
@@ -275,8 +296,8 @@ def listen(request):
 
     list_current_nivel_senteces=[]
     for j in current_sentences:
-        list_current_nivel_senteces.append(j.valor_frase)    
-    
+        list_current_nivel_senteces.append(j.valor_frase)
+        
     aleatorio_1 = int(request.POST['contador'])
     linea_Eng=list_current_sentences[aleatorio_1]
     translator=google_translator()
@@ -308,7 +329,12 @@ def phrase2(request):
 
     list_current_nivel_senteces=[]
     for j in current_sentences:
-        list_current_nivel_senteces.append(j.valor_frase)    
+        list_current_nivel_senteces.append(j.valor_frase)
+
+    list_id = []
+    for l in current_sentences:
+        list_id.append(l.id)
+
     
     indice_sentencia = int(request.POST['contador'])
     linea_Eng=list_current_sentences[indice_sentencia]
@@ -320,8 +346,17 @@ def phrase2(request):
     print(request.POST['answer_sentence'])
     if request.POST['answer_sentence'] == linea_Eng:
         answer = 'correcto'
+        frase = Sentence.objects.get(id=list_id[indice_sentencia])
+        frase.valor_frase= list_current_nivel_senteces[indice_sentencia]-1
+        frase.save()
+        nivel_sentce = list_current_nivel_senteces[indice_sentencia]-1
     else:
         answer = 'incorrecto'
+        frase = Sentence.objects.get(id=list_id[indice_sentencia])
+        frase.valor_frase= list_current_nivel_senteces[indice_sentencia]+1
+        frase.save()
+        nivel_sentce = list_current_nivel_senteces[indice_sentencia]+1
+
     context={
         
         'contador': indice_sentencia,

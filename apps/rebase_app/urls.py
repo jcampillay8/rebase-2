@@ -23,4 +23,5 @@ urlpatterns = [
     path('rebase/add_new_sentence/<int:text_id>', views.add_new_sentence),
     path('rebase/delete_sentence', views.delete_sentence, name='delete_sentence'),
     path('rebase/delete2/<int:textId>', views.delete2, name='delete2'),
+    path('rebase/next_line', views.next_line, name='next_line'),
 ]
