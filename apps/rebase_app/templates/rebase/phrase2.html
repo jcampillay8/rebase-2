@@ -17,7 +17,12 @@
             <input type="number" value="{{contador}}" name='contador' class="contador">
         </form>
         
-        <a href="delete/{{text.id}}" class="btn-out" style="margin-left: 200px;">Eliminar</a>
+        <form action="/rebase/delete_sentence" method='POST'>
+            {% csrf_token %}
+            <button type="submit" value='submit' class="btn-out" style="margin-left: 200px;">Eliminar</button>
+            
+            <input type="hidden" value="{{contador}}" name='contador' >
+        </form>
     </div>
     <div class="row2_3">
         <form action="/rebase/phrase2" method='POST'>

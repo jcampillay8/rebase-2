@@ -324,3 +324,14 @@ form a{
     border-radius: 10px;
     transition: background 0.5s;
 }
+
+.container_delete_sentence{
+    text-align: center;
+    width: 700px;
+    margin-left: 200px;
+}
+
+.row_delete_sentence_1 h2{
+    background-color: yellow;
+    color: red;
+}

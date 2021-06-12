@@ -5,13 +5,24 @@
 
 {% block content %}
 
+<div class="container_delete_sentence">
+    <div class="row_delete_sentence_1">
+        <h2>Advertencia, ¿Está seguro de borrar la siguiente frase?</h2>
+    </div>
+    <br>
 
-    {{ contador }}
-    {{ text_esp }}
-    <h3>ini</h3>
-    {{ identification }}
-    <h3>FIN</h3>
-    {{ english_sentence }}
-    <a href="delete2/{{ identification }}"  class="btn-out">Eliminar</a>
+    <div class="row_delete_sentence_2">
+        <h3>Frase en Inglés:</h3>
+        <p>{{ english_sentence }}</p>
+        <br>
+        <h3>Traducción en español:</h3>
+        <p>{{ text_esp }}</p>
+    </div>
+    <div class="row_delete_sentence_3">
+        <a href="/rebase/phrase"  class="btn">Regresar</a> |  <a href="delete2/{{ identification }}"  class="btn-out">Eliminar</a>
+    </div>
+</div>
+    
+    
 
 {% endblock %}
