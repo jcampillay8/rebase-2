@@ -23,7 +23,7 @@
         <form action="/rebase/phrase2" method='POST'>
         {% csrf_token %}
         <h4>Tu respuesta en Inglés:</h4>
-        <input type="text" name='answer_sentence' class='answer_sentence'>
+        <input type="text" name='answer_sentence' class='answer_sentence'placeholder='{{respuesta }}'>
         <div class="btn_respuesta_nivel" >
             {% if answer == 'correcto' %}
             <p style="background-color: green;">Bueno</p>

@@ -5,15 +5,10 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from google_trans_new import google_translator
 from django.contrib import messages
 import random
+import pyttsx3
 
 # Home
 def home(request):
-    
-    # context = {
-    #     'user': User.objects.get(id=request.session['id']),
-    #     'wishes': User.objects.get(id=request.session['id']).wishes.all(),
-    #     'granted_wishes': Granted_wish.objects.all()
-    # }
     return render(request, 'rebase/home.html')
 
 def users(request):
@@ -143,7 +138,7 @@ def add_new_sentence(request, text_id):
         cont.save()
         contador=Text.objects.get(id=text_id).contador
 
-        linea_Esp = line[contador]
+        linea_Eng = line[contador]
         context ={
             'book': Text.objects.get(id=text_id),
             'text_name': Text.objects.get(id=text_id).text_name,
@@ -224,9 +219,9 @@ def translate(request, text_id):
     cont.contador=int(request.POST['contador'])
     cont.save()
     contador=Text.objects.get(id=text_id).contador
-    linea_Esp = line[contador]
+    linea_Eng = line[contador]
     translator=google_translator()
-    translation=translator.translate(linea_Esp,lang_src="en", lang_tgt="es")
+    translation=translator.translate(linea_Eng,lang_src="en", lang_tgt="es")
     context ={
         'book': Text.objects.get(id=text_id),
         'text_name': Text.objects.get(id=text_id).text_name,
@@ -239,9 +234,7 @@ def translate(request, text_id):
 
 
 
-def word(request):
 
-    return render(request, 'rebase/word.html')
 
 def phrase(request):
     user = User.objects.get(id=request.session["id"])
@@ -257,11 +250,45 @@ def phrase(request):
         list_current_nivel_senteces.append(j.valor_frase)    
     
     aleatorio_1 = random.randint(0,len(list_current_sentences)-1)
-    linea_Esp=list_current_sentences[aleatorio_1]
+    linea_Eng=list_current_sentences[aleatorio_1]
     translator=google_translator()
-    translation=translator.translate(linea_Esp,lang_src="en", lang_tgt="es")
+    translation=translator.translate(linea_Eng,lang_src="en", lang_tgt="es")
 
     nivel_sentce = list_current_nivel_senteces[aleatorio_1]
+    context={
+        
+        'contador': aleatorio_1,
+        'text_esp':translation,
+        'nivel': nivel_sentce,
+        'english_sentence': ' ',
+    }
+    return render(request, 'rebase/phrase.html', context)
+
+def listen(request):
+    user = User.objects.get(id=request.session["id"])
+    current_sentences =Sentence.objects.filter(user_frase=user)
+    
+    list_current_sentences =[]
+    for i in current_sentences:
+        list_current_sentences.append(i.frase)
+        print(i.frase)
+
+    list_current_nivel_senteces=[]
+    for j in current_sentences:
+        list_current_nivel_senteces.append(j.valor_frase)    
+    
+    aleatorio_1 = int(request.POST['contador'])
+    linea_Eng=list_current_sentences[aleatorio_1]
+    translator=google_translator()
+    translation=translator.translate(linea_Eng,lang_src="en", lang_tgt="es")
+
+    nivel_sentce = list_current_nivel_senteces[aleatorio_1]
+    engine = pyttsx3.init()
+    voices = engine.getProperty("voices")
+    engine.setProperty("voice", voices[1].id)
+    engine.setProperty("rate", 120)
+    engine.say(linea_Eng)
+    engine.runAndWait()
     context={
         
         'contador': aleatorio_1,
@@ -284,14 +311,14 @@ def phrase2(request):
         list_current_nivel_senteces.append(j.valor_frase)    
     
     indice_sentencia = int(request.POST['contador'])
-    linea_Esp=list_current_sentences[indice_sentencia]
+    linea_Eng=list_current_sentences[indice_sentencia]
     translator=google_translator()
-    translation=translator.translate(linea_Esp,lang_src="en", lang_tgt="es")
+    translation=translator.translate(linea_Eng,lang_src="en", lang_tgt="es")
 
     nivel_sentce = list_current_nivel_senteces[indice_sentencia]
     
     print(request.POST['answer_sentence'])
-    if request.POST['answer_sentence'] == linea_Esp:
+    if request.POST['answer_sentence'] == linea_Eng:
         answer = 'correcto'
     else:
         answer = 'incorrecto'
@@ -300,11 +327,49 @@ def phrase2(request):
         'contador': indice_sentencia,
         'text_esp':translation,
         'nivel': nivel_sentce,
-        'english_sentence': linea_Esp,
+        'english_sentence': linea_Eng,
         'answer':answer,
+        'respuesta': request.POST['answer_sentence'],
     }
 
     return render(request, 'rebase/phrase2.html', context)
+
+def delete_sentence(request):
+    user = User.objects.get(id=request.session["id"])
+    current_sentences =Sentence.objects.filter(user_frase=user)
+    
+    list_current_sentences =[]
+    for i in current_sentences:
+        list_current_sentences.append(i.frase)
+
+    list_id=[]
+    for j in current_sentences:
+        list_id.append(j.id)
+        print(j.id)    
+    
+    indice_sentencia = int(request.POST['contador'])
+    linea_Eng=list_current_sentences[indice_sentencia]
+    translator=google_translator()
+    translation=translator.translate(linea_Eng,lang_src="en", lang_tgt="es")
+
+    identification = list_id[indice_sentencia]
+    
+    context={
+        'contador': indice_sentencia,
+        'text_esp':translation,
+        'identification': identification,
+        'english_sentence': linea_Eng,
+    }
+
+    return render(request,('rebase/delete_sentence.html'), context)
+
+def delete2(request, textId):
+    Sentence.objects.get(id=textId).delete()
+
+    return redirect('/rebase/phrase')
+
+def word(request):
+    return render(request, 'rebase/word.html')
 
 def contact(request):
     return render(request, 'rebase/contact.html')
