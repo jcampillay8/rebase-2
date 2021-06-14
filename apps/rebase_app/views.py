@@ -17,7 +17,7 @@ def home(request):
 def users(request):
     text_list = Text.objects.all()
     page = request.GET.get('page',1)
-    paginator = Paginator(text_list,3)
+    paginator = Paginator(text_list,5)
     try:
         textos = paginator.page(page)
     except PageNotAnInteger:
@@ -95,7 +95,7 @@ def success2(request):
 def read(request):
     text_list = Text.objects.all()
     page = request.GET.get('page',1)
-    paginator = Paginator(text_list,3)
+    paginator = Paginator(text_list,5)
     try:
         textos = paginator.page(page)
     except PageNotAnInteger:
