@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %} Rebase|Home {% endblock %}
+{% block title %} Rebase|Leer {% endblock %}
 
 {% block content %} 
 <div class="row_text">
@@ -18,7 +18,7 @@
                 <th>Acción</th>
             </tr>
         
-            {% for text in textos reversed %}
+            {% for text in textos %}
             {% if text.user.id == request.session.id %}
             {% load i18n %}
             <tr>

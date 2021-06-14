@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 
 {% load static %}
@@ -50,15 +49,12 @@
         </div>
         <br>
         <div class="row2_4">
-            {% if messages %}
-                <div class="error-box">
-                    <ul>
-                    {% for message in messages %}
-                        <li class="messages-error">{{ message }}</li>
-                    {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
+            <div class="box_success">
+                <ul>
+                    <li class="messages-success" > La frase "{{ frase }}" ha sido incluida exitosamente! </li>
+                </ul>
+            </div>                  
+                
             <form action="/rebase/add_new_sentence/{{book.id}}" method='POST'>
                 {% csrf_token %}
                 <h4>Agregar frase para estudiar</h4>

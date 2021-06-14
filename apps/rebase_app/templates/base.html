@@ -12,14 +12,20 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/grid_03.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel='shortcut icon' type='image/x-icon' href="{% static 'img/rebase_logo2.ico' %}" /> 
     {% setup_hotkeys %}
 </head>
 <body>
     <div class="contenedor">
+        <div class="logo">
+            <img src="{% static 'img/rebase_logo2.ico' %}" alt="image">
+        </div>
         <header class="header">
             <div class="col_izq">
                 <h1>Rebase</h1>
                 <h3>Read English Book and Study English</h3>
+                <p></p>
             </div>
             <div class="col_der">
                 <p><a href="{% url 'users' %}" class="btn">Mi Cuenta</a> | <a href="/logout" class='btn-out'>Salir</a></p>
@@ -30,8 +36,8 @@
                 <li><a href="/rebase/home"><strong>Inicio</strong></a></li>
                 <li><a href="/rebase/add_text"><strong>Insertar Texto &rsaquo;&rsaquo;</strong></a></li>
                 <li><a href="/rebase/read"><strong>Leer Texto&rsaquo;&rsaquo;</strong></a></li>
-                <li><a href="/rebase/word"><strong>Estudiar Palabras &rsaquo;&rsaquo;</strong></a></li>
                 <li><a href="/rebase/phrase"><strong>Estudiar Frases &rsaquo;&rsaquo;</strong></a></li>
+                <li><a href="/rebase/video"><strong>Video Introducción<nav</nav> &rsaquo;&rsaquo;</strong></a></li>
                 <li><a href="/rebase/contact"><strong>Contacto</strong></a></li>
             </ul>
         </nav>
@@ -40,7 +46,15 @@
             {% endblock %}
         </main>
         <footer class="footer">
-            <p>Coding Dojo</p>
+            <h3>Rebase</h3>
+					<p>Read Book and Study English</p>
+					<ul class="socials">
+						<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+						<li><a href="#"><i class="fa fa-github"></i></a></li>
+						<li><a href="#"><i class="fa fa-google"></i></a></li>
+						<li><a href="#"><i class="fa fa-youtube"></i></a></li>
+						<li><a href="#"><i class="fa fa-linkedin-square"></i></a></li>
+					</ul>
         </footer>
     </div>  
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">

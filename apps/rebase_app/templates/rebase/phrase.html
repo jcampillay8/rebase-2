@@ -3,7 +3,7 @@
 
 {% load static %}
 
-{% block title %} Rebase|Home {% endblock %}
+{% block title %} Rebase|Frase {% endblock %}
 
 {% block content %} 
     <div class="row2">
@@ -36,8 +36,8 @@
         <div class="row2_3">
             <form action="/rebase/phrase2" method='POST'>
             {% csrf_token %}
-            <h4>Escribe aquí tu respuesta en Inglés:</h4>
-            <input type="text" name='answer_sentence' class='answer_sentence'>
+            <h4><u>E</u>scribe aquí tu respuesta en Inglés:</h4>
+            <input type="text" name='answer_sentence' class='answer_sentence' accesskey ="L">
             <div class="btn_respuesta_nivel" >
                 <p></p>
                 <input type="hidden" value="{{contador}}" name='contador'>

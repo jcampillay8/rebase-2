@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %} Rebase|Home {% endblock %}
+{% block title %} Rebase|Agregar Texto {% endblock %}
 
 {% block content %} 
 
@@ -12,6 +12,15 @@
             <br>
             <label class="label-item">Ingresa nombre texto:</label>
             <input class="input-item" type='text' name='text_name'>
+            {% if messages %}
+                <div class="error-box">
+                    <ul>
+                    {% for message in messages %}
+                        <li class="messages-error">{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
             <br>
             <label class="label-item">Pegar en este cuadro texto a leer:</label>
             <textarea class="textboxInput" name="add_text"></textarea></br></br>

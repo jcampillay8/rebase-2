@@ -1,16 +1,17 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %} Rebase|Home {% endblock %}
+{% block title %} Rebase|exito {% endblock %}
 
 {% block content %} 
-
-    <div class="col_izq">
-        <h1> Texto {{text.text_name}} añadido correctamente</h1><br>
-        <p>Exito {{ user.first_name }}! </p><br>
-    </div>
-    <div class="col_der">
-        <img src="{% static 'img/book_success.jpg' %}" alt="image">
-    </div>
+    <div class="video">
+        <div class="col_izq">
+            <h1> Texto {{text.text_name}} añadido correctamente</h1><br>
+            <h3>Exito {{ user.first_name }}! </h3><br>
+        </div>
+        <div class="col_der">
+            <img src="{% static 'img/book_success.jpg' %}" alt="image">
+        </div>
+    </div>   
 
 {% endblock %}

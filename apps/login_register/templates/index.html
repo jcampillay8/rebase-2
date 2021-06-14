@@ -4,20 +4,26 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>Layout de Sitio Web con CSS GRID</title>
+		<title>Inicio</title>
 		{% load static %}
         <link rel="stylesheet" href="{% static 'css/grid_01.css' %}">
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
         <link href="https://fonts.googleapis.com/css2?family=Roboto" rel="stylesheet">
-
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel='shortcut icon' type='image/x-icon' href="{% static 'img/rebase_logo2.ico' %}" /> 
 	</head>
 	<body>
 		<div class="contenedor">
+            <div class="logo">
+                <img src="{% static 'img/rebase_logo2.ico' %}" alt="image">
+            </div>
 			<header class="header">
 				<h1>REBASE</h1>
-                <h3>Read English Book and Study English</h3>
+                <h3 >Read English Book and Study English</h3>
 			</header>
-
+            <div class="navbar">
+                <h3 style="color: #fff; margin-left: 50px;">Happy Learning!</h3>
+            </div>
 			<section class="section">
 				{% if messages %}
                 <div class="error-box">
@@ -82,11 +88,11 @@
                         </div>
                         <div class="form-item">
                             <div class="col1">
-                                <label class="label-item">Correo Electrónido:</label>
+                                <label class="label-item">Correo Electrónico:</label>
                                 <input class="input-item" type='email' name='email'>
                             </div>
                             <div class="col2">
-                                <label class="label-item">Confirmación Correo Electrónido:</label>
+                                <label class="label-item">Confirmación Correo Electrónico:</label>
                                 <input class="input-item" type='email' name='confirm_email'>
                             </div>
                             
@@ -106,7 +112,15 @@
                     </form>
 			</main>
 			<footer class="footer">
-				Coding Dojo - Latam
+				<h3>Rebase</h3>
+					<p>Read Book and Study English</p>
+					<ul class="socials">
+						<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+						<li><a href="#"><i class="fa fa-github"></i></a></li>
+						<li><a href="#"><i class="fa fa-google"></i></a></li>
+						<li><a href="#"><i class="fa fa-youtube"></i></a></li>
+						<li><a href="#"><i class="fa fa-linkedin-square"></i></a></li>
+					</ul>
 			</footer>
             <script src="{% static 'js/script.js' %}"></script>
 		</div>

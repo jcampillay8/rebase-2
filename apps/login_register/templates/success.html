@@ -4,28 +4,50 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
-		<title>Layout de Sitio Web con CSS GRID</title>
+		<title>Registro Exitoso</title>
 		{% load static %}
-        <link rel="stylesheet" href="{% static 'css/grid_02.css' %}">
+        <link rel="stylesheet" href="{% static 'css/grid_01.css' %}">
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
         <link href="https://fonts.googleapis.com/css2?family=Roboto" rel="stylesheet">
-
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel='shortcut icon' type='image/x-icon' href="{% static 'img/rebase_logo2.ico' %}" /> 
 	</head>
 	<body>
 		<div class="contenedor">
+			<div class="logo">
+                <img src="{% static 'img/rebase_logo2.ico' %}" alt="image">
+            </div>
 			<header class="header">
-				<h1>Success!</h1>
+				<h1>¡Éxito!</h1>
 			</header>
+			<div class="navbar">
+                <h3 style="color: #fff; margin-left: 50px;">Happy Learning!</h3>
+            </div>
+			<section class="section">
+				<h1>¡Bienvenido/a {{ user.first_name }}! </h1><br>
+                <p>¡Ya estás resgitrado y listo para que empices a usar Rebase!</p><br>
+                <div style="text-align: center; padding:20px">
+                    <a href="{% url 'index' %}" class="btn-contact">Home</a>
+                </div>
+                
+			</section>
 
 			<main class="contenido">
-				<h1>Welcome {{ user.first_name }}! </h1><br>
-                <p>You have successfully logged in!</p><br>
-                <div style="text-align: center; padding:20px">
-                    <a href="{% url 'index' %}" class="button-1">Home</a>
-                </div>
+				
+				<div class="like_success">
+				<img src="{% static 'img/like-button.png' %}" alt="image" style="width: 60%; height: 60%; margin-left: 50px;">
+				</div>
 			</main>
 			<footer class="footer">
-				Coding Dojo - Latam
+					<h3>Rebase</h3>
+					<p>Read Book and Study English</p>
+					<ul class="socials">
+						<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+						<li><a href="#"><i class="fa fa-github"></i></a></li>
+						<li><a href="#"><i class="fa fa-google"></i></a></li>
+						<li><a href="#"><i class="fa fa-youtube"></i></a></li>
+						<li><a href="#"><i class="fa fa-linkedin-square"></i></a></li>
+					</ul>
 			</footer>
 		</div>
 	</body>

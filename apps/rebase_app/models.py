@@ -4,6 +4,13 @@ import datetime
 from apps.login_register.models import User
 import requests 
 
+class TextManager(models.Manager):
+    def add_text_validator(self, postData):
+        errors={}
+        if(len(postData['text_name'])) < 2:
+            errors['new_sentence'] = "El nombre texto debe debe tener a lo menos 3 caracteres"
+        return errors
+
 class SentenceManager(models.Manager):
     def add_sentence_validator(self, postData, actual):
         user = User.objects.get(id=actual)
@@ -19,7 +26,9 @@ class SentenceManager(models.Manager):
         sentence_exists = Sentence.objects.filter(frase=postData['new_sentence'])
         print(postData['new_sentence'])
         if postData['new_sentence'] in list_sentences:
-            errors['new_sentence'] = f" La frase '{postData['new_sentence']}' ya ha sido iuncluida"
+            errors['new_sentence'] = f" La expresión '{postData['new_sentence']}' ya ha sido inucluida"
+        if(len(postData['new_sentence'])) < 2:
+            errors['new_sentence'] = "La expresión debe tener a lo menos 3 caracteres"
         return errors
 
 class Text(models.Model):
@@ -29,6 +38,7 @@ class Text(models.Model):
     contador = models.IntegerField(default=0)
     createdAt = models.DateTimeField(auto_now_add=True)
     updatedAt = models.DateTimeField(auto_now_add=True)
+    objects= TextManager()
 
 
 class Sentence(models.Model):

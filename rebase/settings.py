@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import smtplib
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'keyboard_shortcuts',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -129,8 +131,6 @@ STATIC_URL = '/static/'
 HOTKEYS = [
             {'keys': 'CTRL + UP ARROW',  
             'link': '/rebase/phrase',},
-            {'keys': 'CTRL + l',  
-            'link': '/rebase/listen',},
-            {'keys': 'CTRL + ENTER',  
-            'link': '/rebase/phrase2',},
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

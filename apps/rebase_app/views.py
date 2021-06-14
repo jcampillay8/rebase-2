@@ -4,6 +4,9 @@ from apps.rebase_app.models import Text, Sentence
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from google_trans_new import google_translator
 from django.contrib import messages
+from apps.rebase_app.forms import ContactForm
+from django.core.mail import EmailMessage, BadHeaderError
+from django.http import HttpResponse, HttpResponseRedirect
 import random
 import pyttsx3
 
@@ -36,10 +39,17 @@ def logout(request):
 
 
 def add_text(request):
+    
     return render(request, 'rebase/add_text.html')
 
 def add_text2(request):
-    print('add message initiated')
+    errors = Text.objects.add_text_validator(request.POST)
+
+    if(len(errors)):
+        for tag, error in errors.items():
+            messages.error(request, error, extra_tags=tag)
+        return redirect('add_text')
+
     if request.method == 'POST':
         thisUser = User.objects.get(id=request.session['id'])
         print(request.session['id'])
@@ -137,6 +147,7 @@ def add_new_sentence(request, text_id):
         cont.contador=int(request.POST['contador'])
         cont.save()
         contador=Text.objects.get(id=text_id).contador
+        frase = request.POST['new_sentence']
 
         linea_Eng = line[contador]
         context ={
@@ -145,8 +156,9 @@ def add_new_sentence(request, text_id):
             'content':  line[contador],
             'contador': contador,
             'contenido': '',
+            'frase': frase,
         }
-        return render(request, 'rebase/read2.html', context)    
+        return render(request, 'rebase/read_add.html', context)    
 
 def next(request, text_id):
     print('hello there')
@@ -343,8 +355,7 @@ def phrase2(request):
 
     nivel_sentce = list_current_nivel_senteces[indice_sentencia]
     
-    print(request.POST['answer_sentence'])
-    if request.POST['answer_sentence'] == linea_Eng:
+    if (str(request.POST['answer_sentence'])).lower()== linea_Eng.lower():
         answer = 'correcto'
         frase = Sentence.objects.get(id=list_id[indice_sentencia])
         frase.valor_frase= list_current_nivel_senteces[indice_sentencia]-1
@@ -400,11 +411,30 @@ def delete_sentence(request):
 
 def delete2(request, textId):
     Sentence.objects.get(id=textId).delete()
-
     return redirect('/rebase/phrase')
 
-def word(request):
-    return render(request, 'rebase/word.html')
+def video(request):
+    return render(request, 'rebase/video.html')
 
 def contact(request):
-    return render(request, 'rebase/contact.html')
+    if request.method == 'GET':
+        form = ContactForm()
+    else:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            from_email = form.cleaned_data['from_email']
+            message = form.cleaned_data['message']
+            try:
+                print('correo')
+                mensaje=EmailMessage(subject, message, from_email, to=['jcampillayworks@gmail.com'])
+                mensaje.send()
+            except BadHeaderError:
+                return HttResponse('Invalid header found')
+            return redirect('thankyou')
+        print('correo2')
+    return render(request, 'rebase/contact.html', {'form':form})
+
+def thankyou(request):
+    print('how close')
+    return render(request,'rebase/thankyou.html')

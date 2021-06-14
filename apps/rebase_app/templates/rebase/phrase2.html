@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %} Rebase|Home {% endblock %}
+{% block title %} Rebase|Frase2 {% endblock %}
 
 {% block content %} 
 <div class="row2">
@@ -26,18 +26,18 @@
         </form>
     </div>
     <div class="row2_3">
-        <form action="/rebase/phrase2" method='POST'>
+        <form action="" method='POST'>
         {% csrf_token %}
         <h4>Tu respuesta en Inglés:</h4>
-        <input type="text" name='answer_sentence' class='answer_sentence'placeholder='{{respuesta }}'>
+        <input type="text" name='answer_sentence' class='answer_sentence'placeholder='{{respuesta }}' style="font-size: large;">
         <div class="btn_respuesta_nivel" >
             {% if answer == 'correcto' %}
-            <p style="background-color: green;">Bueno</p>
+            <p style="background-color: rgb(11, 197, 11);">Bueno</p>
             {% else %}
             <p style="background-color: red;">Malo</p>
             {% endif %}
             <input type="hidden" value="{{contador}}" name='contador'>
-            <button type="" value='submit' class="btn_answer">Ver Respuesta</button>
+            <button type="" value='' class="btn_answer" disabled='true'>Ver Respuesta</button>
             <p>Nivel: {{ nivel }}</p>
         </div>
         </form>        

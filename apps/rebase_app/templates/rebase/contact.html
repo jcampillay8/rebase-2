@@ -1,10 +1,28 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %} Rebase|Home {% endblock %}
+{% block title %} Rebase|Contacto {% endblock %}
+{% load crispy_forms_tags %}
 
 {% block content %} 
+<div class="container_centro">
+    <h2>Hola {{request.session.first_name}}! enviame un mensaje.</h2>
+    <br><br>
+    <div class="row_two">
+        <form method="POST">
+            {% csrf_token %}
+            {% load i18n %}
+            {% language 'es' %}
+            {{ form|crispy }}
+            <div class="form-actions">
+                <button type="submit" class='btn-contact'>Enviar</button>
+            </div>
+            {% endlanguage %}
+       </form>
+    </div>
+    
+</div>
 
-    <h4>Hola {{request.session.first_name}}! CONTACTO</h4>
+    
 
 {% endblock %}

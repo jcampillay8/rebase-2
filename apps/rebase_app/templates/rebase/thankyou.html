@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Rebase|Gracias {% endblock %}
+
+{% block content %} 
+
+<div class="video">
+    <h2>¡Gracias por el mensaje {{request.session.first_name}}! </h2>
+    <br>
+
+    <img src="{% static 'img/thanks.jpg' %}" alt="image"
+</div>
+
+{% endblock %}

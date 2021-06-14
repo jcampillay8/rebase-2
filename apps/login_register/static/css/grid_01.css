@@ -15,11 +15,12 @@ body {
 	max-width: 1200px;
 	margin: 20px auto;
 	display: grid;
-	grid-gap: 20px;
+	/* grid-gap: 20px; */
 	/* grid-template-columns: repeat(3, 1fr);
 	grid-template-rows: repeat(4, auto); */
 	grid-template-areas:
-		'header			header   		header			header			header			header'
+		'logo			header   		header			header			header			header'
+		'navbar         navbar          navbar          navbar          navbar          navbar'
 		'section		section 		section			contenido		contenido		contenido'
 		'footer	 		footer 			footer			footer			footer			footer	';
 }
@@ -32,13 +33,18 @@ body {
 .contenedor .footer{
     background: #fff;
     padding: 20px;
-    border-radius: 4px;
+    
 }
 
 /* ---------- HEADER ----------*/
 .header {
 	grid-area: header;
 	
+}
+
+/* ---------- NAVBAR ----------*/
+.navbar {
+	grid-area: navbar;
 }
 
 /* ---------- SECTION ----------*/
